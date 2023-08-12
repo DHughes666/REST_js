@@ -84,7 +84,8 @@ app.route("/articles")
     .post(function(req, res){
       const specificTitle = req.params.specificTitle;
         Article.findOneAndUpdate(
-          {title: specificTitle}, {content:req.body.content}, {new: true})
+          {title: specificTitle},
+          {title: req.body.title, content:req.body.content}, {new: true})
         .then(data => res.send(`${specificTitle} updated`))
         .catch(err => res.send(err))
       })
