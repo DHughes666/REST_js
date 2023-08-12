@@ -81,7 +81,7 @@ app.route("/articles")
       .then(data => res.send(data))
       .catch(err => res.send(err))
     })
-    .post(function(req, res){
+    .put(function(req, res){
       const specificTitle = req.params.specificTitle;
         Article.findOneAndUpdate(
           {title: specificTitle},
@@ -89,9 +89,20 @@ app.route("/articles")
         .then(data => res.send(`${specificTitle} updated`))
         .catch(err => res.send(err))
       })
+    .patch(function(req, res){
+      const specificTitle = req.params.specificTitle
+      Article.findOneAndUpdate(
+        {title: specificTitle},
+        {$set: req.body})
+      .then(data => res.send('Article updated Successfully'))
+      .catch(err => res.send(err))
+    })
     .delete(function(req, res){
-        Article.deleteMany()
-        .then(data => res.send("Collections Successfully emptied!"))
+      const specificTitle = req.params.specificTitle;
+        Article.deleteOne(
+          {title: specificTitle}
+        )
+        .then(data => res.send(`${specificTitle} Successfully deleted`))
         .catch(err => res.send(err));
       });
 
